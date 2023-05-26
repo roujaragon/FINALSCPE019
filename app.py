@@ -24,7 +24,7 @@ def import_and_predict(image_data,model):
     return prediction
 
 st.write("""
-# Car-Bike Detection """
+# Car/Bike Detection System"""
          )
 st.write("#### Deployed by John Kennedy Aquino, Roujienald Aragon, and Vincent Angelo Chinel")
 file=st.file_uploader("Choose Car or Bike photo from computer",
