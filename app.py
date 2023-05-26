@@ -1,20 +1,40 @@
-import streamlit as st 
+import streamlit as st
+import tensorflow as tf
+import numpy as np
+import cv2
+from PIL import Image,ImageOps
 
-st.set_page_config(page_title="My Website", page_icon=":middle_finger", layout="wide")
-
-# ---- HEAD ----
-
-with st.container():
-    st.header("Test Header")
-    st.title("Title")
-    st.write("##")
-    st.write("[Click This Link >](https://www.youtube.com/watch?v=VqgUkExPvLY&t=570s)")
-
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model():
-  model=tf.keras.models.load_model('CarBikeDataset.hdf5')
-  return model
-model=load_model()
+    model = tf.keras.models.load_model('car_bike_classifier.h5',compile=False)
+    model.compile(loss='categorical_crossentropy',
+                  optimizer="adam",
+                  metrics=['acc'])
+    return model
+
+def import_and_predict(image_data,model):
+    size =  (75,75)
+    image = ImageOps.fit(image_data,size,Image.ANTIALIAS)
+    img=np.asarray(image)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img_reshape=gray[np.newaxis,...]
+    prediction=model.predict(img_reshape)
+    return prediction
+
 st.write("""
-# Car-Bike Detection System"""
-)
+# Car-Bike Detection """
+         )
+st.write("#### Deployed by John Kennedy Aquino, Roujienald Aragon, and Vincent Angelo Chinel")
+file=st.file_uploader("Choose Car or Bike photo from computer",
+                      type=["jpg","jpeg","png"])
+
+if file is None:
+    st.text("Please upload an image file")
+else:
+    image=Image.open(file)
+    st.image(image,use_column_width=True)
+    model = load_model()
+    prediction=import_and_predict(image,model)
+    class_names=["Bike","Car"]
+    string="OUTPUT : "+class_names[np.argmax(prediction)]
+    st.success(string)
