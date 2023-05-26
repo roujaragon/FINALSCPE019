@@ -6,7 +6,7 @@ from PIL import Image,ImageOps
 
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('CarBikeCassifier.h5',compile=False)
+    model = tf.keras.models.load_model('CarBikeDataset.h5',compile=False)
     model.compile(loss='categorical_crossentropy',
                   optimizer="adam",
                   metrics=['acc'])
