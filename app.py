@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 from PIL import Image,ImageOps
 
-st.set_page_config(page_title="Car/Bike Detection System", page_icon=":automobile:", layout="wide")
+st.set_page_config(page_title="Car/Bike Detection System", page_icon="🚗", layout="wide")
 
 @st.cache_resource
 def load_model():
