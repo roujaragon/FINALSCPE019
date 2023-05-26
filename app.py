@@ -23,12 +23,13 @@ def import_and_predict(image_data,model):
     prediction=model.predict(img_reshape)
     return prediction
 
-st.write("""
-# Car/Bike Detection System"""
-         )
-st.write("#### Deployed by John Kennedy Aquino, Roujienald Aragon, and Vincent Angelo Chinel")
-file=st.file_uploader("Choose Car or Bike photo from computer",
-                      type=["jpg","jpeg","png"])
+with st.container():
+    st.write("""
+    # Car/Bike Detection System"""
+             )
+    st.write("#### Deployed by John Kennedy Aquino, Roujienald Aragon, and Vincent Angelo Chinel")
+    file=st.file_uploader("Choose Car or Bike photo from computer",
+                          type=["jpg","jpeg","png"])
 
 if file is None:
     st.text("Please upload an image file")
